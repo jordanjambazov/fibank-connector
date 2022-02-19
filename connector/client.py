@@ -28,6 +28,21 @@ class Client:
         assert response.status_code == 200
         return response.json()
 
+    def get_customer_balance(self):
+        response = self._session.get(
+            f'{self.api_root}sywsquery/sywsquery/GetCustBal',
+            params={
+                'FromDate': '2022-01-01T00:00:00%2B0200',
+                'ToDate': '2022-02-19T00:00:00%2B0200',
+                'Iban': 'BG47FINV91501017006644',
+                'StmtType': 'T',
+                'isAccountFromPSD2': 'false',
+            },
+            headers=self._headers()
+        )
+        assert response.status_code == 200
+        return response.json()
+
     def _headers(self):
         return {
             'Accept-Language': 'bg',
