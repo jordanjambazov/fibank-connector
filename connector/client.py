@@ -15,26 +15,13 @@ class Client:
         assert response.status_code == 200
         return response.json()
 
-    def get_account_statement_list(self):
-        response = self._session.get(
-            f'{self.api_root}sywsquery/sywsquery/getAccStmtList',
-            params={
-                'AccountNo': 'BG47FINV91501017006644',
-                'FromDate': '2022-02-01T00:00:00%2B0200',
-                'Iban': 'BG47FINV91501017006644',
-                'ToDate': '2022-02-19T00:00:00%2B0200',
-            }
-        )
-        assert response.status_code == 200
-        return response.json()
-
-    def get_customer_balance(self):
+    def get_customer_balance(self, iban: str):
         response = self._session.get(
             f'{self.api_root}sywsquery/sywsquery/GetCustBal',
             params={
-                'FromDate': '2022-01-01T00:00:00%2B0200',
-                'ToDate': '2022-02-19T00:00:00%2B0200',
-                'Iban': 'BG47FINV91501017006644',
+                'FromDate': '1993-02-27T00:00:00%2B0200',  # genesis
+                'ToDate': self._auth.iso_time(),
+                'Iban': iban,
                 'StmtType': 'T',
                 'isAccountFromPSD2': 'false',
             },

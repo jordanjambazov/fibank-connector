@@ -28,3 +28,4 @@ class Transaction(models.Model):
 
     remark_1 = models.CharField(max_length=128)
     remark_2 = models.CharField(max_length=128)
+    remark_3 = models.CharField(max_length=128)
