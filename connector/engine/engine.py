@@ -47,9 +47,9 @@ class Engine:
                     continue
                 reference = transaction['reference']
                 db_transaction, created = Transaction.objects.get_or_create(
-                    reference=reference,
+                    account_entry_serial_number=transaction['acEntrySrNo'],
                     defaults={
-                        'account_entry_serial_number': transaction['acEntrySrNo'],
+                        'reference': reference,
                         'account': db_account,
                         'account_balance': transaction['acBal'],
                         'amount': transaction['amount'],

@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Transaction(models.Model):
-    reference = models.CharField(max_length=128, unique=True)
     account_entry_serial_number = models.BigIntegerField(unique=True)
+    reference = models.CharField(max_length=128)
 
     account = models.ForeignKey('account.Account', on_delete=models.CASCADE)
     account_balance = models.DecimalField(decimal_places=2, max_digits=11)
