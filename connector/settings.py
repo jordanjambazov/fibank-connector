@@ -172,6 +172,9 @@ LOGGING = {
    },
 }
 
+# Authorization secret
+AUTH_SECRET = os.environ['AUTH_SECRET']
+
 # Fibank
 FIBANK_USERNAME = os.environ['FIBANK_USERNAME']
 FIBANK_PASSWORD = os.environ['FIBANK_PASSWORD']
