@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 import sys
+import urllib.parse
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -77,16 +78,29 @@ WSGI_APPLICATION = 'connector.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'fibank',
-        'USER': 'fibank',
-        'PASSWORD': 'fibank',
-        'HOST': 'localhost',
-        'PORT': 3306,
+if 'DATABASE_URL' in os.environ:
+    result = urllib.parse.urlparse(os.environ['DATABASE_URL'])
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': result.path[1:],
+            'USER': result.username,
+            'PASSWORD': result.password,
+            'HOST': result.hostname,
+            'PORT': result.port,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'fibank',
+            'USER': 'fibank',
+            'PASSWORD': 'fibank',
+            'HOST': 'localhost',
+            'PORT': 3306,
+        }
+    }
 
 
 # Password validation
