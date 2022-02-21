@@ -8,11 +8,12 @@ django.setup()
 scheduler = BlockingScheduler()
 
 
-@scheduler.scheduled_job('interval', minutes=3)
-def timed_job():
+def reconcile_job():
     from connector.engine import Engine
     engine = Engine()
     engine.reconcile_all()
 
 
+scheduler.add_job(reconcile_job, 'cron', hour='3', minute='0', args=[])
+scheduler.add_job(reconcile_job, 'cron', hour='18', minute='0', args=[])
 scheduler.start()
