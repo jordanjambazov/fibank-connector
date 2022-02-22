@@ -45,7 +45,7 @@ class Engine:
             statement = customer_balance['acc'][0]['stmt']
             for transaction in statement:
                 transaction_type = transaction['trnType']
-                if transaction_type in {'OP', 'CL'}:
+                if transaction_type in {'OP', 'CL', 'DT', 'CT'}:
                     continue
                 reference = transaction['reference']
                 db_transaction, created = Transaction.objects.get_or_create(
