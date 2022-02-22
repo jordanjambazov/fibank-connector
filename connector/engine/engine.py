@@ -37,6 +37,9 @@ class Engine:
     def reconcile_transactions(self):
         for db_account in Account.objects.all():
             customer_balance = self._client.get_customer_balance(db_account.iban)
+            if not customer_balance:
+                logger.warning('Failed to retrieve balance, perhaps API returned 500?')
+                continue
             if len(customer_balance['acc']) != 1:
                 continue
             statement = customer_balance['acc'][0]['stmt']
